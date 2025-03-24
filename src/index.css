@@ -7,6 +7,7 @@
   --color-dark-red: #ac2828;
   --color-mid-blue: #306a9f;
   --color-dark-blue: #1d2633;
+  --color-whitesmoke: #f5f5f5;
 }
 
 /* @custom-variant dark (&:is(.dark *)); */
