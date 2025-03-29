@@ -25,7 +25,7 @@ export function SortBox() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button className="bg-white cursor-pointer flex items-center justify-between rounded-full shadow-none w-full p-5 text-[0.9rem]">
+        <Button className="bg-white cursor-pointer flex items-center justify-between rounded-full shadow-none w-full p-5 text-[0.9rem] text-dark-blue hover:bg-white border border-gray-300">
           Sort
           <ChevronDown />
         </Button>
@@ -40,7 +40,7 @@ export function SortBox() {
               <RadioGroupItem
                 value={item}
                 id={item}
-                className=" text-gray-300 border-2 border-gray-400 [&_svg]:fill-mid-blue cursor-pointer data-[state=checked]:border-mid-blue peer data-[state=checked]:drop-shadow-lg"
+                className=" text-gray-300 border-1 border-gray-400 [&_svg]:fill-mid-blue cursor-pointer data-[state=checked]:border-mid-blue peer data-[state=checked]:drop-shadow-lg"
               />
               <Label
                 htmlFor={item}

@@ -5,22 +5,45 @@ import EditTask from "./pages/EditTask/EditTask";
 import TaskDetail from "./pages/TaskDetail/TaskDetail";
 import HomePageLoader from "./components/HomePageLoader";
 import "./App.css";
+import { useState, useEffect } from "react";
 
 function App() {
-  return (
-    <main className="app h-[100vh] relative overflow-hidden">
-      <div className="appBox overflow-hidden w-[500px] p-4 m-auto">
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/taskDetail" element={<TaskDetail />} />
-            <Route path="/newTask" element={<NewTask />} />
-            <Route path="/editTask" element={<EditTask />} />
-          </Routes>
-        </BrowserRouter>
-      </div>
+  const [isloaded, setIsLoading] = useState<boolean>(false);
+  const [renderContent, setRenderContent] = useState<boolean>(false);
 
-      <HomePageLoader />
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(true);
+    }, 2000);
+    setIsLoading(false);
+  }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setRenderContent(true);
+    }, 3000);
+  }, []);
+
+  return (
+    <main
+      className={`app relative ${
+        !isloaded ? `h-[100vh] overflow-hidden` : `min-h-[100vh] overflow-auto`
+      }`}
+    >
+      {isloaded && renderContent ? (
+        <div className="appBox w-[500px] px-4 py-8 m-auto ">
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/taskDetail" element={<TaskDetail />} />
+              <Route path="/newTask" element={<NewTask />} />
+              <Route path="/editTask" element={<EditTask />} />
+            </Routes>
+          </BrowserRouter>
+        </div>
+      ) : (
+        <HomePageLoader isloaded={isloaded} />
+      )}
     </main>
   );
 }

@@ -1,18 +1,11 @@
 import { motion } from "motion/react";
 import cardLogo from "../assets/cardsLogo.svg";
-import { useState, useEffect } from "react";
 
-type Props = {};
+type Props = {
+  isloaded: boolean;
+};
 
-function HomePageLoader({}: Props) {
-  const [isloaded, setIsloaded] = useState<Boolean>(false);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setIsloaded(true);
-    }, 2000);
-  }, []);
-
+function HomePageLoader({ isloaded }: Props) {
   return (
     <>
       <motion.div

@@ -21,7 +21,7 @@ export function CategoryBox() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild className="w-full">
-        <Button className="bg-white cursor-pointer flex items-center justify-between rounded-full shadow-none w-full p-5 text-[0.9rem]">
+        <Button className="bg-white cursor-pointer flex items-center justify-between rounded-full shadow-none w-full p-5 text-[0.9rem] text-dark-blue hover:bg-white border border-gray-300">
           Category
           <ChevronDown />
         </Button>
@@ -34,7 +34,7 @@ export function CategoryBox() {
           >
             <Checkbox
               id={item}
-              className="rounded-full border-gray-400 border-2 data-[state=checked]:bg-mid-blue data-[state=checked]:border-mid-blue data-[state=checked]:text-white data-[state=checked]:drop-shadow-lg cursor-pointer"
+              className="rounded-full border-gray-400 border-1 data-[state=checked]:bg-mid-blue data-[state=checked]:border-mid-blue data-[state=checked]:text-white data-[state=checked]:drop-shadow-lg cursor-pointer"
             />
             <Label
               htmlFor={item}
