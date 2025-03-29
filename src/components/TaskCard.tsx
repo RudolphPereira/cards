@@ -117,7 +117,7 @@ export function TaskCard({
         </div>
         {CircleProgress && (
           <div className="rightActiontBox w-[100px] h-[100px] mr-2">
-            {<CircleProgress value={66} pathValueRGA="222, 176, 56" />}
+            {<CircleProgress value={40} pathValueRGA="222, 176, 56" />}
           </div>
         )}
       </CardContent>
@@ -131,12 +131,12 @@ export function TaskCard({
             <div className="textBox flex justify-between items-center font-medium text-lg text-dark-blue">
               <h3 className="">Task Completed</h3>
               <span className="flex items-center justify-center text-[14rem] absolute right-[-3rem] pointer-events-none top-[.9rem] font-black text-dark-blue/20">
-                100
+                40
               </span>
             </div>
             <div className="barBox">
               <ProgressBar
-                value={80}
+                value={40}
                 additionalClass={`[&>div]:bg-golden-rod`}
               />
             </div>

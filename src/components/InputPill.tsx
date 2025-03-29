@@ -22,7 +22,7 @@ export default function InputPill({
 }: Props) {
   return (
     <div
-      className={`flex items-center gap-1 bg-white border border-gray-300 rounded-full searchForm h-14 group/search  group-focus/search`}
+      className={`flex items-center gap-1 bg-white border border-gray-300 rounded-full searchForm w-[100%] h-14 group/search  group-focus/search  group/right-btn group-focus/right-btn`}
     >
       {leftIcon && (
         <label

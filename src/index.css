@@ -69,6 +69,10 @@
   --sidebar-ring: oklch(0.708 0 0);
 }
 
+a {
+  display: inline-block;
+}
+
 /* a {
   font-weight: 500;
   color: #646cff;

@@ -16,7 +16,7 @@ export function CircleProgress({ value, pathValueRGA }: Props) {
       backgroundPadding={6}
       styles={buildStyles({
         textSize: "1.3rem",
-        pathColor: `rgba(${pathValueRGA}, ${value / 100})`,
+        pathColor: `rgba(${pathValueRGA}, 1)`,
         textColor: `#1d2633`,
         trailColor: "transparent",
         backgroundColor: "#f5f5f5",

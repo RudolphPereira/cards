@@ -8,7 +8,7 @@ type Props = {
 export const FadeIn = ({ delayNum, children }: Props) => {
   return (
     <motion.div
-      className="flex-1"
+      className="flex-1 flex flex-col items-center justify-center"
       initial={{ transform: "translateY(-2rem)", opacity: 0 }}
       animate={{ transform: "translateY(0)", opacity: 1 }}
       transition={{

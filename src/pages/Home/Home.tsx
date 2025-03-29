@@ -24,7 +24,7 @@ function Home({}: Props) {
             htmlFor="searchInput"
             id="searchInput"
             placeHolder="Search your cards"
-            additionalClassForCirBtn="hover:bg-mid-blue"
+            additionalClassForCirBtn="group-hover/right-btn:bg-mid-blue group-focus-within/right-btn:bg-mid-blue rotate-45 group-hover/right-btn:rotate-0 group-focus-within/right-btn:rotate-0 pointer-events-none"
             rightIcon={<ArrowRight />}
           />
         </FadeIn>
@@ -51,7 +51,7 @@ function Home({}: Props) {
         </FadeIn>
       </div>
 
-      <div className="homePageButtons flex flex-col gap-4">
+      <div className="homePageButtons flex flex-col gap-4 ">
         <FadeIn delayNum={0.4}>
           <Link to={"/NewTask"}>
             <ActionBtn

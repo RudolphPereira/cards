@@ -59,7 +59,7 @@ function TaskDetail({}: Props) {
           />
         </div>
 
-        <div className="submitBox flex flex-col gap-4">
+        <div className="submitBox flex flex-col gap-4 items-center justify-center">
           <ActionBtn
             btnClass={`hover:bg-mid-blue`}
             text="Repeat Tasks"

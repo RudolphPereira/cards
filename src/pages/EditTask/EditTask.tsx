@@ -77,7 +77,7 @@ function EditTask({}: Props) {
             additionalClassForInput="pl-[1rem]"
           />
         </div>
-        <div className="submitBox">
+        <div className="submitBox flex justify-center">
           <Link to={"/"}>
             <ActionBtn text="Save Card" btnClass={`hover:bg-mid-blue`} />
           </Link>
