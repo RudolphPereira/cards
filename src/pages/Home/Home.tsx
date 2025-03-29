@@ -41,31 +41,37 @@ function Home({}: Props) {
       </div>
 
       <div className="cardBoxes flex flex-col gap-4 max-h-[70vh] overflow-auto pb-3 no-scrollbar">
-        <TaskCard
-          DelelteEditComplete={<DelelteEditComplete />}
-          CircleProgress={CircleProgress}
-          Tags={<Tags />}
-          TaskLink={true}
-        />
+        <FadeIn delayNum={0.3}>
+          <TaskCard
+            DelelteEditComplete={<DelelteEditComplete />}
+            CircleProgress={CircleProgress}
+            Tags={<Tags />}
+            TaskLink={true}
+          />
+        </FadeIn>
       </div>
 
       <div className="homePageButtons flex flex-col gap-4">
-        <Link to={"/NewTask"}>
+        <FadeIn delayNum={0.4}>
+          <Link to={"/NewTask"}>
+            <ActionBtn
+              btnClass={`hover:bg-mid-blue`}
+              icon={
+                <Plus className="transition-all duration-300 ease-in-out group-hover:rotate-90 text-white" />
+              }
+              text="Add New Card"
+            />
+          </Link>
+        </FadeIn>
+        <FadeIn delayNum={0.5}>
           <ActionBtn
             btnClass={`hover:bg-mid-blue`}
             icon={
-              <Plus className="transition-all duration-300 ease-in-out group-hover:rotate-90 text-white" />
+              <Zap className="transition-all duration-500 ease-in-out group-hover:rotate-180 text-white scale-90" />
             }
-            text="Add New Card"
+            text="Power Mode"
           />
-        </Link>
-        <ActionBtn
-          btnClass={`hover:bg-mid-blue`}
-          icon={
-            <Zap className="transition-all duration-500 ease-in-out group-hover:rotate-180 text-white scale-90" />
-          }
-          text="Power Mode"
-        />
+        </FadeIn>
       </div>
     </section>
   );

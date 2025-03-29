@@ -21,6 +21,7 @@ type Props = {
   CircleProgress?: any;
   Tags?: any;
   TaskLink?: boolean;
+  ProgressBar?: any;
 };
 
 export function TaskCard({
@@ -28,9 +29,10 @@ export function TaskCard({
   CircleProgress,
   Tags,
   TaskLink,
+  ProgressBar,
 }: Props) {
   return (
-    <Card className="w-full bg-golden-rod/20 border-0 p-4 flex flex-col gap-3">
+    <Card className="w-full bg-golden-rod/20 border-0 p-4 flex flex-col gap-3 relative overflow-hidden">
       <CardHeader className="p-0">
         <CardTitle className="flex gap-2 justify-between flex-wrap p-0 items-center">
           <div className="leftActionBox flex gap-2 items-center w-[250px]">
@@ -122,6 +124,23 @@ export function TaskCard({
       <CardFooter className=" p-0 pt-2">
         {Tags && (
           <div className="tagsBox flex gap-2 flex-wrap text-xs">{Tags}</div>
+        )}
+
+        {ProgressBar && (
+          <div className="progressBox w-[100%] flex flex-col gap-4">
+            <div className="textBox flex justify-between items-center font-medium text-lg text-dark-blue">
+              <h3 className="">Task Completed</h3>
+              <span className="flex items-center justify-center text-[14rem] absolute right-[-3rem] pointer-events-none top-[.9rem] font-black text-dark-blue/20">
+                100
+              </span>
+            </div>
+            <div className="barBox">
+              <ProgressBar
+                value={80}
+                additionalClass={`[&>div]:bg-golden-rod`}
+              />
+            </div>
+          </div>
         )}
       </CardFooter>
     </Card>

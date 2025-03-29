@@ -21,7 +21,7 @@ function App() {
   useEffect(() => {
     setTimeout(() => {
       setRenderContent(true);
-    }, 3000);
+    }, 2900);
   }, []);
 
   return (

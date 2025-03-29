@@ -6,6 +6,7 @@ import InputPill from "@/components/InputPill";
 import { Title } from "@/components/Title";
 import { Check, RefreshCcw, OctagonX } from "lucide-react";
 import ActionBtn from "@/components/ActionBtn";
+import { ProgressBar } from "@/components/ProgressBar";
 
 type Props = {};
 
@@ -37,7 +38,7 @@ function TaskDetail({}: Props) {
 
       <div className="formBox flex flex-col gap-6">
         <div className="nameBox flex flex-col gap-3">
-          <TaskCard />
+          <TaskCard ProgressBar={ProgressBar} />
         </div>
 
         <div className="subTaskBox flex flex-col gap-3">
