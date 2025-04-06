@@ -3,9 +3,10 @@ import Home from "./pages/Home/Home";
 import NewTask from "./pages/NewTask/NewTask";
 import EditTask from "./pages/EditTask/EditTask";
 import TaskDetail from "./pages/TaskDetail/TaskDetail";
-import HomePageLoader from "./components/HomePageLoader";
+import PageLoader from "./components/loaders/PageLoader";
 import "./App.css";
 import { useState, useEffect } from "react";
+import { TodoProvider } from "./context/TodoContext";
 
 function App() {
   const [isloaded, setIsLoading] = useState<boolean>(false);
@@ -21,28 +22,30 @@ function App() {
   useEffect(() => {
     setTimeout(() => {
       setRenderContent(true);
-    }, 2900);
+    }, 2650);
   }, []);
 
   return (
     <main
-      className={`app relative ${
-        !isloaded ? `h-[100vh] overflow-hidden` : `min-h-[100vh] overflow-auto`
+      className={`app  h-screen relative flex flex-col ${
+        !isloaded ? ` overflow-hidden` : ` overflow-auto`
       }`}
     >
       {isloaded && renderContent ? (
-        <div className="appBox w-[500px] px-4 py-8 m-auto ">
+        <div className={`appBox max-w-[500px]  m-auto w-full min-h-[100vh]`}>
           <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/taskDetail" element={<TaskDetail />} />
-              <Route path="/newTask" element={<NewTask />} />
-              <Route path="/editTask" element={<EditTask />} />
-            </Routes>
+            <TodoProvider>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/taskDetail/:id" element={<TaskDetail />} />
+                <Route path="/newTask" element={<NewTask />} />
+                <Route path="/editTask/:id" element={<EditTask />} />
+              </Routes>
+            </TodoProvider>
           </BrowserRouter>
         </div>
       ) : (
-        <HomePageLoader isloaded={isloaded} />
+        <PageLoader isloaded={isloaded} />
       )}
     </main>
   );

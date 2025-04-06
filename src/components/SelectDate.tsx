@@ -1,9 +1,5 @@
-"use client";
-
-import * as React from "react";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
-
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -13,15 +9,20 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-export function SelectDate() {
-  const [date, setDate] = React.useState<Date>();
+type Props = {
+  date?: Date | undefined;
+  setDate?: any;
+  id?: string;
+};
 
+export function SelectDate({ date, setDate, id }: Props) {
   return (
     <Popover>
       <PopoverTrigger asChild>
         <Button
+          id={id}
           className={cn(
-            " flex-1 justify-between text-left font-normal bg-white border  border-gray-300 text-dark-blue rounded-full cursor-pointer py-3 shadow-none hover:bg-white pl-6 text-base h-[50px]",
+            " flex-1 justify-between text-left font-normal text-sm bg-white border  border-gray-300 text-dark-blue rounded-full cursor-pointer py-3 shadow-none hover:bg-white pl-6  h-[50px]",
             !date && "text-muted-foreground"
           )}
         >
@@ -41,7 +42,7 @@ export function SelectDate() {
           selected={date}
           onSelect={setDate}
           initialFocus
-          className=" border-0 rounded-2xl"
+          className="border-0 rounded-2xl"
           showOutsideDays
           fromDate={new Date()}
         />

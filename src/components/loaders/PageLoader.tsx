@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import cardLogo from "../assets/cardsLogo.svg";
+import cardLogo from "../../assets/cardsLogo.svg";
 
 type Props = {
   isloaded: boolean;
@@ -21,6 +21,7 @@ function HomePageLoader({ isloaded }: Props) {
         }}
       >
         <motion.img
+          className="shadow-lg rounded-full"
           src={cardLogo}
           alt="logoImage"
           initial={{ scale: 0 }}

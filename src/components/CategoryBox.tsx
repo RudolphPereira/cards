@@ -3,20 +3,48 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
+  DropdownMenuCheckboxItem,
+  DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 import { Label } from "@/components/ui/label";
 import { ChevronDown } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useTodo } from "@/context/TodoContext";
+import { useState } from "react";
+import { Input } from "./ui/input";
 
-export function CategoryBox() {
-  const categoryArr: Array<string> = [
-    "Hello",
-    "Hi there",
-    "What you doing",
-    "Good evening",
-    "jesus",
-    "lets, go",
-  ];
+type Props = {};
+
+export default function CategoryBox({}: Props) {
+  const { todos, setTodos }: any = useTodo();
+
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+
+  const handleTagChange = (tag: string, checked: boolean) => {
+    if (checked) {
+      setSelectedTags([...selectedTags, tag]);
+    } else {
+      setSelectedTags(selectedTags.filter((t) => t !== tag));
+    }
+
+    const updatedTodos = todos.map((todo: any) => {
+      if (selectedTags.length > 0) {
+        if (todo.tags.some((tag: any) => selectedTags.includes(tag))) {
+          return todo;
+        }
+      }
+    });
+
+    console.log(updatedTodos);
+  };
+
+  // Create Arr to map
+  const todoTags = todos
+    .map((todo: any) => todo.tags)
+    .flat()
+    .map((item: any) => item[0]);
+
+  const uniArr = [...new Set(todoTags)];
 
   return (
     <DropdownMenu>
@@ -26,24 +54,21 @@ export function CategoryBox() {
           <ChevronDown />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className=" bg-white border-0 rounded-2xl p-4 flex gap-2.5 flex-col min-w-[13rem]">
-        {categoryArr.map((item) => (
-          <div
-            key={item}
-            className="flex items-center justify-between flex-row-reverse gap-2.5 border-b-1 border-gray-300 pb-2.5 last:border-0 last:pb-0 "
-          >
-            <Checkbox
-              id={item}
-              className="rounded-full border-gray-400 border-1 data-[state=checked]:bg-mid-blue data-[state=checked]:border-mid-blue data-[state=checked]:text-white data-[state=checked]:drop-shadow-lg cursor-pointer"
-            />
-            <Label
-              htmlFor={item}
-              className=" cursor-pointer text-gray-500 transition-all ease-in-out duration-75 hover:text-mid-blue font-normal peer-data-[state=checked]:text-mid-blue text-[0.8rem] w-full peer-data-[state=checked]:font-semibold"
-            >
-              {item}
-            </Label>
-          </div>
-        ))}
+      <DropdownMenuContent className="bg-white categoryDropDown border-0 rounded-2xl p-3 flex gap-2.5 flex-col min-w-[13rem]">
+        {uniArr.map((item: any) => {
+          return (
+            <div key={item}>
+              <DropdownMenuCheckboxItem
+                className="w-full text-[0.8rem]"
+                onCheckedChange={(checked) => handleTagChange(item, checked)}
+                checked={selectedTags.includes(item)}
+                onSelect={(e) => e.preventDefault()}
+              >
+                {item}
+              </DropdownMenuCheckboxItem>
+            </div>
+          );
+        })}
       </DropdownMenuContent>
     </DropdownMenu>
   );
