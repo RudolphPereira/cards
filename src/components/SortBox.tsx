@@ -1,16 +1,23 @@
-import * as React from "react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { useTodo } from "@/context/TodoContext";
 import { ChevronDown } from "lucide-react";
+import { useEffect, useState } from "react";
 
 export function SortBox() {
-  const [position, setPosition] = React.useState("bottom");
+  const { sortCards }: any = useTodo();
+
+  const [sortValue, setSortValue] = useState("Default");
+
+  useEffect(() => {
+    sortCards(sortValue);
+  }, [sortValue]);
 
   const sortArr: Array<string> = [
     "Default",
@@ -30,27 +37,23 @@ export function SortBox() {
           <ChevronDown />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className=" bg-white border-0 rounded-2xl p-4 min-w-[13rem]">
-        <RadioGroup value={position} onValueChange={setPosition}>
+      <DropdownMenuContent className="bg-white border-0 rounded-2xl p-3  min-w-[13rem]">
+        <DropdownMenuRadioGroup
+          value={sortValue}
+          onValueChange={setSortValue}
+          className="flex gap-2.5 flex-col"
+        >
           {sortArr.map((item) => (
-            <div
+            <DropdownMenuRadioItem
               key={item}
-              className=" flex items-center justify-between flex-row-reverse gap-2.5 border-b-1 border-gray-300 pb-2.5 last:border-0 last:pb-0 "
+              className="w-full text-[0.8rem]"
+              value={item}
+              onSelect={(e) => e.preventDefault()}
             >
-              <RadioGroupItem
-                value={item}
-                id={item}
-                className=" text-gray-300 border-1 border-gray-400 [&_svg]:fill-mid-blue cursor-pointer data-[state=checked]:border-mid-blue peer data-[state=checked]:drop-shadow-lg"
-              />
-              <Label
-                htmlFor={item}
-                className=" cursor-pointer text-gray-500 transition-all ease-in-out duration-75 hover:text-mid-blue font-normal peer-data-[state=checked]:text-mid-blue text-[0.8rem] w-full peer-data-[state=checked]:font-semibold"
-              >
-                {item}
-              </Label>
-            </div>
+              {item}
+            </DropdownMenuRadioItem>
           ))}
-        </RadioGroup>
+        </DropdownMenuRadioGroup>
       </DropdownMenuContent>
     </DropdownMenu>
   );

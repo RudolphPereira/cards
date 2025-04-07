@@ -183,7 +183,7 @@ export function TaskCard({
           )}
         </CardTitle>
       </CardHeader>
-      <CardContent className="p-0 flex gap-2 items-center justify-center flex-wrap flex-col sm:flex-row  sm:justify-between">
+      <CardContent className="p-0 flex gap-2 items-center justify-start md:justify-center flex-wrap flex-col sm:flex-row  sm:justify-between">
         <div className="leftBox flex-1 flex flex-col gap-2.5 text-base">
           <div className="dateBox flex gap-1.5 items-center">
             <div className="iconBox aspect-square w-[18px] h-[18px]">
@@ -258,7 +258,7 @@ export function TaskCard({
           </div>
         </div>
         {CircleProgress && (
-          <div className="rightActionBox w-[150px] h-[150px] sm:w-[110px] md:h-[110px] mr-2 shadow-xs rounded-full items-center flex">
+          <div className="rightActionBox w-[150px]  h-[150px] sm:w-[110px] md:h-[110px] md:mr-2 shadow-xs rounded-full items-center flex">
             {
               <CircleProgress
                 value={todo.completed ? 100 : progressValue}
@@ -270,7 +270,7 @@ export function TaskCard({
           </div>
         )}
       </CardContent>
-      <CardFooter className="p-0 pt-2 ">
+      <CardFooter className="p-0 pt-2">
         {Tags && (
           <div className="tagContent">
             <div className="tagsBox flex gap-2 flex-wrap text-xs w-full">

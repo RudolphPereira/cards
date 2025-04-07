@@ -6,12 +6,9 @@ import {
   DropdownMenuCheckboxItem,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
-import { Label } from "@/components/ui/label";
 import { ChevronDown } from "lucide-react";
-import { Checkbox } from "@/components/ui/checkbox";
 import { useTodo } from "@/context/TodoContext";
 import { useState } from "react";
-import { Input } from "./ui/input";
 
 type Props = {};
 

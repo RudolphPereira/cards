@@ -52,9 +52,9 @@ function Home({}: Props) {
         </>
       )}
 
-      <div className="cardBoxes flex flex-col- gap-4 overflow-auto pb-3 no-scrollbar">
+      <div className="cardBoxes flex flex-col gap-4 overflow-auto pb-3 no-scrollbar">
         <FadeIn delayNum={0.3}>
-          <div className="flex flex-col-reverse gap-5">
+          <div className="flex flex-col gap-5">
             {todos.map((todo: any) => (
               <TaskCard
                 key={todo.id}

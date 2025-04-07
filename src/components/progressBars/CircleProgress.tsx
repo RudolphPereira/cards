@@ -9,6 +9,7 @@ type Props = {
 export function CircleProgress({ value, pathValueRGA }: Props) {
   return (
     <CircularProgressbar
+      className="w-[100%]"
       value={value}
       text={`${value}%`}
       strokeWidth={10}
