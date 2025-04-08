@@ -8,7 +8,6 @@ import {
 } from "react";
 import { formatTime, createCleanArr, generateTagBgColor } from "@/lib/utils";
 import { useNavigate } from "react-router";
-import { todo } from "node:test";
 
 export const TodoContext = createContext({});
 
@@ -35,6 +34,7 @@ interface Card {
   subTasks: Array<SubTasks>;
   tags: Array<Tags>;
   completed: boolean;
+  power: number;
 }
 
 interface SubTasks {
@@ -56,6 +56,8 @@ export function TodoProvider({ children }: Props) {
   const [newSubTask, setNewSubTask] = useState<string>("");
   const [tagList, setTagList] = useState<Tags[]>([]);
   const [newTag, setNewTag] = useState<string>("");
+  const [sortValue, setSortValue] = useState("Default");
+  const sortedTodos = [...todos];
 
   const navigate = useNavigate();
 
@@ -108,6 +110,7 @@ export function TodoProvider({ children }: Props) {
         subTasks: subTasks,
         tags: tagList,
         completed: false,
+        power: priority + complexity,
       };
 
       setTodos([...todos, newTodoItem]);
@@ -302,27 +305,6 @@ export function TodoProvider({ children }: Props) {
     return cardColor;
   };
 
-  const sortCards = (value: string) => {
-    const sortedTodos = [...todos];
-
-    if (value === "Ascending Priority") {
-      sortedTodos.sort((a: any, b: any) => a.priority - b.priority);
-    } else if (value === "Descending Priority") {
-      sortedTodos.sort((a: any, b: any) => b.priority - a.priority);
-    } else if (value === "Ascending Complexity") {
-      sortedTodos.sort((a: any, b: any) => a.complexity - b.complexity);
-    } else if (value === "Descending Complexity") {
-      sortedTodos.sort((a: any, b: any) => b.complexity - a.complexity);
-    } else if (value === "Ascending Date") {
-      sortedTodos.sort((a: any, b: any) => a.dateSelected - b.dateSelected);
-    } else if (value === "Descending Date") {
-      sortedTodos.sort((a: any, b: any) => b.dateSelected - a.dateSelected);
-    }
-
-    sortedTodos.reverse();
-    setTodos(sortedTodos);
-  };
-
   const handleBack = () => {
     setNewTodo("");
     setPriority(1);
@@ -335,6 +317,8 @@ export function TodoProvider({ children }: Props) {
     setTagList([]);
     navigate("/");
   };
+
+  console.log(todos);
 
   return (
     <TodoContext.Provider
@@ -356,6 +340,9 @@ export function TodoProvider({ children }: Props) {
         newTag,
         setNewTag,
         optionsLevel,
+        sortValue,
+        setSortValue,
+        sortedTodos,
         getTodo,
         deleteTodo,
         completeTodo,
@@ -365,7 +352,6 @@ export function TodoProvider({ children }: Props) {
         handleRepeatSubTask,
         handleDeleteSavedSubTask,
         getProgress,
-        sortCards,
         addSubTask,
         handleBack,
         getCardColor,

@@ -8,11 +8,36 @@ import InputPill from "@/components/form/InputPill";
 import { FadeIn } from "@/components/animations/FadeIn";
 import { CircleProgress } from "@/components/progressBars/CircleProgress";
 import { useTodo } from "@/context/TodoContext";
+import { useState } from "react";
 
 type Props = {};
 
 function Home({}: Props) {
-  const { todos }: any = useTodo();
+  const { todos, sortedTodos, sortValue }: any = useTodo();
+
+  const [powerMode, setPowerMode] = useState<boolean>(false);
+
+  if (sortValue === "Ascending Priority") {
+    sortedTodos.sort((a: any, b: any) => a.priority - b.priority);
+  } else if (sortValue === "Descending Priority") {
+    sortedTodos.sort((a: any, b: any) => b.priority - a.priority);
+  } else if (sortValue === "Ascending Complexity") {
+    sortedTodos.sort((a: any, b: any) => a.complexity - b.complexity);
+  } else if (sortValue === "Descending Complexity") {
+    sortedTodos.sort((a: any, b: any) => b.complexity - a.complexity);
+  } else if (sortValue === "Ascending Date") {
+    sortedTodos.sort((a: any, b: any) => a.dateSelected - b.dateSelected);
+  } else if (sortValue === "Descending Date") {
+    sortedTodos.sort((a: any, b: any) => b.dateSelected - a.dateSelected);
+  }
+
+  sortedTodos.reverse();
+
+  // Power Mode
+  const powerCard = [...sortedTodos]
+    .sort((a: any, b: any) => b.power - a.power)
+    .find((todo: any) => !todo.completed);
+
   return (
     <section
       className={`home flex flex-col gap-5 relative px-4 py-4.5 ${
@@ -54,17 +79,30 @@ function Home({}: Props) {
 
       <div className="cardBoxes flex flex-col gap-4 overflow-auto pb-3 no-scrollbar">
         <FadeIn delayNum={0.3}>
-          <div className="flex flex-col gap-5">
-            {todos.map((todo: any) => (
+          <div className="flex flex-col-reverse gap-5">
+            {powerMode && powerCard !== undefined ? (
               <TaskCard
-                key={todo.id}
-                todo={todo}
+                key={powerCard.id}
+                todo={powerCard}
                 CircleProgress={CircleProgress}
                 DeleteEditComplete
                 Tags
                 TaskLink
               />
-            ))}
+            ) : (
+              <>
+                {sortedTodos.map((todo: any) => (
+                  <TaskCard
+                    key={todo.id}
+                    todo={todo}
+                    CircleProgress={CircleProgress}
+                    DeleteEditComplete
+                    Tags
+                    TaskLink
+                  />
+                ))}
+              </>
+            )}
           </div>
         </FadeIn>
       </div>
@@ -85,15 +123,24 @@ function Home({}: Props) {
         {todos.length <= 1 ? (
           <></>
         ) : (
-          <FadeIn delayNum={0.5}>
-            <ActionBtn
-              btnClass={`hover:bg-mid-blue`}
-              icon={
-                <Zap className="transition-all duration-500 ease-in-out group-hover:rotate-180 text-white scale-90" />
-              }
-              text="Power Mode"
-            />
-          </FadeIn>
+          <>
+            {powerCard !== undefined ? (
+              <FadeIn delayNum={0.5}>
+                <ActionBtn
+                  handleClickEvent={() => setPowerMode(!powerMode)}
+                  btnClass={`hover:bg-mid-blue ${
+                    powerMode ? `bg-mid-blue` : ""
+                  }`}
+                  icon={
+                    <Zap className="transition-all duration-500 ease-in-out group-hover:rotate-180 text-white scale-90" />
+                  }
+                  text="Power Mode"
+                />
+              </FadeIn>
+            ) : (
+              <></>
+            )}
+          </>
         )}
       </div>
     </section>
