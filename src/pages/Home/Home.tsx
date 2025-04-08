@@ -79,7 +79,7 @@ function Home({}: Props) {
 
       <div className="cardBoxes flex flex-col gap-4 overflow-auto pb-3 no-scrollbar">
         <FadeIn delayNum={0.3}>
-          <div className="flex flex-col-reverse gap-5">
+          <div className="flex flex-col-reverse gap-5 max-w-[500px]">
             {powerMode && powerCard !== undefined ? (
               <TaskCard
                 key={powerCard.id}

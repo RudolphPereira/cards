@@ -105,7 +105,7 @@ export function TaskCard({
   return (
     <Card
       key={todo.id}
-      className={`w-full ${
+      className={`w-[100%]  ${
         todo.completed ? `bg-emerald-600/20` : setCardBgColor
       } border-0 p-4 flex flex-col gap-3 relative overflow-hidden transition-all duration-200 ease-in-out`}
     >

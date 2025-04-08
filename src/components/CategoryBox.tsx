@@ -4,7 +4,6 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
   DropdownMenuCheckboxItem,
-  DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 import { ChevronDown } from "lucide-react";
 import { useTodo } from "@/context/TodoContext";
@@ -13,7 +12,7 @@ import { useState } from "react";
 type Props = {};
 
 export default function CategoryBox({}: Props) {
-  const { todos, setTodos }: any = useTodo();
+  const { todos }: any = useTodo();
 
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 

@@ -318,8 +318,6 @@ export function TodoProvider({ children }: Props) {
     navigate("/");
   };
 
-  console.log(todos);
-
   return (
     <TodoContext.Provider
       value={{
