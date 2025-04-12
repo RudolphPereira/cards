@@ -147,7 +147,7 @@ function Home({}: Props) {
     >
       {todos.length !== 0 && (
         <>
-          <div className="searchBox sticky top-5 z-10 ">
+          <div className="searchBox sm:sticky sm:top-5 z-10 ">
             <FadeIn delayNum={0}>
               <InputPill
                 leftIcon={
@@ -163,7 +163,7 @@ function Home({}: Props) {
             </FadeIn>
           </div>
 
-          <div className="dropDownBoxes sticky top-24 z-10 flex gap-5 justify-between flex-wrap">
+          <div className="dropDownBoxes sm:sticky sm:top-24 z-10 flex gap-5 justify-between flex-wrap">
             <FadeIn delayNum={0.1}>
               <SortBox />
             </FadeIn>
