@@ -109,15 +109,11 @@ function Home({}: Props) {
     setDragTodos((array: any) => arrayMove(array, oldIndex, newIndex));
 
     if (filteredDragTodos.length > 0) {
-      setDragTodos((array: any) =>
-        arrayMove(filteredDragTodos, oldIndex, newIndex)
-      );
+      setDragTodos(() => arrayMove(filteredDragTodos, oldIndex, newIndex));
     }
 
     if (filterSearchDragTodos.length > 0) {
-      setDragTodos((array: any) =>
-        arrayMove(filterSearchDragTodos, oldIndex, newIndex)
-      );
+      setDragTodos(() => arrayMove(filterSearchDragTodos, oldIndex, newIndex));
     }
   };
 
