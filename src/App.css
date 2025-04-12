@@ -24,6 +24,10 @@ a {
     padding: 2rem 2rem 0rem 2rem;
     border-bottom-left-radius: 1rem;
     border-bottom-right-radius: 1rem;
+    @media screen and (max-width: 414px) {
+      width: 100%;
+      left: 0;
+    }
   }
 }
 
