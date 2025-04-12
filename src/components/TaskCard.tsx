@@ -106,7 +106,7 @@ export function TaskCard({
   return (
     <Card
       key={todo.id}
-      className={`max-w-470px sm:min-w-[100%] ${
+      className={`sm:max-w-470px w-[100%] ${
         todo.completed ? `bg-emerald-600/20` : setCardBgColor
       } border-0 p-4 flex flex-col gap-3 relative overflow-hidden transition-all duration-200 ease-in-out`}
     >
@@ -185,7 +185,7 @@ export function TaskCard({
         </CardTitle>
       </CardHeader>
       <CardContent className="p-0 flex gap-2 items-center justify-start md:justify-center flex-wrap flex-col sm:flex-row  sm:justify-between">
-        <div className="leftBox flex-1 flex flex-col gap-2.5 text-base">
+        <div className="leftBox flex-1 flex flex-col gap-2.5 text-base w-[100%]">
           <div className="dateBox flex gap-1.5 items-center">
             <div className="iconBox aspect-square w-[18px] h-[18px]">
               <img
