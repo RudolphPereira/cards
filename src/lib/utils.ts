@@ -44,15 +44,3 @@ export const setIntensity = (value: number) => {
     return "High";
   }
 };
-
-// export const getSubTasksCompletedValue = (todo: any, subTasks: any) => {
-//   const allSubTasksCompletedValue = todo.subTasks.every((subTask: any) => {
-//     return subTask.completed;
-//   });
-
-//   if (allSubTasksCompletedValue) {
-//     todo.completed = true;
-//   } else {
-//     todo.completed = false;
-//   }
-// };

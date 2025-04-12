@@ -1,13 +1,6 @@
-import { v4 as uid } from "uuid";
-import {
-  useState,
-  useEffect,
-  FormEvent,
-  createContext,
-  useContext,
-} from "react";
-import { formatTime, createCleanArr, generateTagBgColor } from "@/lib/utils";
+import { useState, createContext, useContext, useEffect } from "react";
 import { useNavigate } from "react-router";
+import { v4 as uid } from "uuid";
 
 export const TodoContext = createContext({});
 
@@ -20,20 +13,17 @@ type Props = {
   children: any;
 };
 
-interface LevelOptions {
-  value: string;
-}
-
 interface Card {
   id: string;
   title: string;
   priority: number;
   complexity: number;
-  dateSelected: Date | undefined;
+  dateSelected: any;
   timeSelected: string;
   subTasks: Array<SubTasks>;
   tags: Array<Tags>;
   completed: boolean;
+  tagsString: string;
   power: number;
 }
 
@@ -46,97 +36,79 @@ interface SubTasks {
 interface Tags {}
 
 export function TodoProvider({ children }: Props) {
-  const [todos, setTodos] = useState<Card[]>([]);
-  const [newTodo, setNewTodo] = useState<string>("");
-  const [priority, setPriority] = useState<number>(1);
-  const [complexity, setComplexity] = useState<number>(1);
-  const [calendarDate, setCalendarDate] = useState<Date>();
-  const [time, setTime] = useState<string>("");
-  const [subTasks, setSubTasks] = useState<SubTasks[]>([]);
-  const [newSubTask, setNewSubTask] = useState<string>("");
-  const [tagList, setTagList] = useState<Tags[]>([]);
-  const [newTag, setNewTag] = useState<string>("");
-  const [sortValue, setSortValue] = useState("Default");
+  const storedTodos = JSON.parse(localStorage.getItem("todos") ?? "[]");
+  const [todos, setTodos] = useState<Card[]>(storedTodos);
+  const [sortValue, setSortValue] = useState<string>("Default");
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [powerMode, setPowerMode] = useState<boolean>(false);
+  const [searchValue, setSearchValue] = useState<string>("");
   const sortedTodos = [...todos];
+
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
 
   const navigate = useNavigate();
 
-  const optionsLevel: LevelOptions[] = [
-    { value: "1" },
-    { value: "2" },
-    { value: "3" },
-    { value: "4" },
-    { value: "5" },
-    { value: "6" },
-    { value: "7" },
-    { value: "8" },
-    { value: "9" },
-    { value: "10" },
-  ];
-
-  // Set Tag colors
-  const tagArr = createCleanArr(newTag);
-
-  const colorsTagArr = tagArr.map(() => {
-    const colors = generateTagBgColor();
-    return colors;
-  });
-
-  const tagsWithColorsArr = tagArr.map((tag, index) => {
-    return [tag, colorsTagArr[index]];
-  });
-
-  useEffect(() => {
-    setTagList(tagsWithColorsArr);
-  }, [newTag]);
-
-  useEffect(() => {
-    if (tagList.length === 0) {
-      const unTaggedItem: string[] = ["untagged", "bg-dark-blue/25"];
-      setTagList([...tagList, unTaggedItem]);
-    }
-  }, [tagList]);
-
-  const addTodo = () => {
-    if (newTodo !== "") {
-      const todoId = uid();
-      const newTodoItem: Card = {
-        id: todoId,
-        title: newTodo,
-        priority: priority,
-        complexity: complexity,
-        dateSelected: calendarDate,
-        timeSelected: formatTime(time),
-        subTasks: subTasks,
-        tags: tagList,
-        completed: false,
-        power: priority + complexity,
-      };
-
-      setTodos([...todos, newTodoItem]);
-      setNewTodo("");
-      setPriority(1);
-      setComplexity(1);
-      setCalendarDate(undefined);
-      setTime("");
-      setNewSubTask("");
-      setSubTasks([]);
-      setNewTag("");
-      setTagList([]);
-    }
+  const addTodo = (
+    title: string,
+    priority: number,
+    complexity: number,
+    dateSelected: any,
+    timeSelected: string,
+    subTasks: [],
+    tags: [],
+    tagsString: string
+  ) => {
+    const todoId = uid();
+    const newTodoItem: Card = {
+      id: todoId,
+      completed: false,
+      title: title,
+      priority: priority,
+      complexity: complexity,
+      dateSelected: dateSelected.toDateString(),
+      timeSelected: timeSelected,
+      subTasks: subTasks,
+      tags: tags,
+      tagsString: tagsString,
+      power: priority + complexity,
+    };
+    setTodos([...todos, newTodoItem]);
+    navigate("/");
   };
 
-  const addSubTask = () => {
-    if (newSubTask !== "") {
-      const subTaskId = uid();
-      const newSubTaskItem: SubTasks = {
-        id: subTaskId,
-        title: newSubTask,
-        completed: false,
-      };
-      setSubTasks([...subTasks, newSubTaskItem]);
-      setNewSubTask("");
-    }
+  const editTodo = (
+    id: string,
+    title: string,
+    priority: number,
+    complexity: number,
+    dateSelected: Date,
+    timeSelected: string,
+    subTasks: [],
+    tags: [],
+    tagsString: string
+  ) => {
+    const updatedTodos = todos.map((todo: any) => {
+      if (todo.id === id) {
+        return {
+          ...todo,
+          title: title,
+          priority: priority,
+          complexity: complexity,
+          dateSelected: dateSelected,
+          timeSelected: timeSelected,
+          subTasks: subTasks,
+          tags: tags,
+          tagsString: tagsString,
+          power: priority + complexity,
+        };
+      } else {
+        return todo;
+      }
+    });
+    setTodos(updatedTodos);
+    navigate("/");
   };
 
   const getTodo = (id: string) => {
@@ -165,17 +137,6 @@ export function TodoProvider({ children }: Props) {
       return todo;
     });
     setTodos(updatedTodos);
-  };
-
-  const handleOnSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    addTodo();
-    navigate("/");
-  };
-
-  const handleDeleteSubTask = (id: string) => {
-    const updatedSubTasks = subTasks.filter((subTask) => subTask.id !== id);
-    setSubTasks(updatedSubTasks);
   };
 
   const handleCompleteSubTask = (todoId: string, id: string) => {
@@ -269,7 +230,7 @@ export function TodoProvider({ children }: Props) {
     const cardColor = todos
       .map((todo) => {
         if (todo.id === id) {
-          const dateSelected = todo.dateSelected;
+          const dateSelected = new Date(todo.dateSelected);
 
           if (dateSelected !== undefined) {
             const dueDateInThreeDays = new Date();
@@ -305,16 +266,15 @@ export function TodoProvider({ children }: Props) {
     return cardColor;
   };
 
+  const searchText = (value: string) => {
+    const searchText = value.trim().toLowerCase();
+    setSearchValue(searchText);
+    if (searchText === "") {
+      setSearchValue("");
+    }
+  };
+
   const handleBack = () => {
-    setNewTodo("");
-    setPriority(1);
-    setComplexity(1);
-    setCalendarDate(undefined);
-    setTime("");
-    setNewSubTask("");
-    setSubTasks([]);
-    setNewTag("");
-    setTagList([]);
     navigate("/");
   };
 
@@ -322,37 +282,28 @@ export function TodoProvider({ children }: Props) {
     <TodoContext.Provider
       value={{
         todos,
-        newTodo,
-        setNewTodo,
-        priority,
-        setPriority,
-        complexity,
-        setComplexity,
-        calendarDate,
-        setCalendarDate,
-        time,
-        setTime,
-        subTasks,
-        newSubTask,
-        setNewSubTask,
-        newTag,
-        setNewTag,
-        optionsLevel,
+        setTodos,
         sortValue,
         setSortValue,
         sortedTodos,
+        selectedTags,
+        setSelectedTags,
+        powerMode,
+        setPowerMode,
+        searchValue,
+        setSearchValue,
+        handleBack,
         getTodo,
         deleteTodo,
         completeTodo,
-        handleOnSubmit,
-        handleDeleteSubTask,
         handleCompleteSubTask,
         handleRepeatSubTask,
         handleDeleteSavedSubTask,
         getProgress,
-        addSubTask,
-        handleBack,
         getCardColor,
+        searchText,
+        editTodo,
+        addTodo,
       }}
     >
       {children}

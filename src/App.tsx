@@ -7,6 +7,7 @@ import PageLoader from "./components/loaders/PageLoader";
 import "./App.css";
 import { useState, useEffect } from "react";
 import { TodoProvider } from "./context/TodoContext";
+import AnimatedCursor from "react-animated-cursor";
 
 function App() {
   const [isloaded, setIsLoading] = useState<boolean>(false);
@@ -15,24 +16,42 @@ function App() {
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(true);
-    }, 2000);
+    }, 1800);
     setIsLoading(false);
   }, []);
 
   useEffect(() => {
     setTimeout(() => {
       setRenderContent(true);
-    }, 2650);
+    }, 2500);
   }, []);
 
   return (
     <main
-      className={`app  h-screen relative flex flex-col ${
-        !isloaded ? ` overflow-hidden` : ` overflow-auto`
+      className={`app h-screen relative flex flex-col ${
+        !isloaded ? `overflow-hidden` : `overflow-auto`
       }`}
     >
       {isloaded && renderContent ? (
-        <div className={`appBox max-w-[500px]  m-auto w-full min-h-[100vh]`}>
+        <div className={`appBox max-w-[500px] m-auto w-full min-h-[100vh]`}>
+          <AnimatedCursor
+            innerSize={12}
+            outerSize={12}
+            color="29, 38, 51"
+            outerAlpha={0.2}
+            innerScale={0.7}
+            outerScale={3.5}
+            clickables={[
+              'input[type="time"]',
+              "a",
+              'input[type="text"]',
+              'input[type="number"]',
+              'input[type="submit"]',
+              "label[for]",
+              "select",
+              "button",
+            ]}
+          />
           <BrowserRouter>
             <TodoProvider>
               <Routes>

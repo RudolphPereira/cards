@@ -72,7 +72,7 @@ function DropdownMenuItem({
       data-inset={inset}
       data-variant={variant}
       className={cn(
-        "focus:bg-accent focus:text-accent-foreground data-[variant=destructive]:text-destructive data-[variant=destructive]:focus:bg-destructive/10 dark:data-[variant=destructive]:focus:bg-destructive/20 data-[variant=destructive]:focus:text-destructive data-[variant=destructive]:*:[svg]:!text-destructive [&_svg:not([class*='text-'])]:text-muted-foreground relative flex cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 data-[inset]:pl-8 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "focus:bg-accent focus:text-accent-foreground data-[variant=destructive]:text-destructive data-[variant=destructive]:focus:bg-destructive/10 dark:data-[variant=destructive]:focus:bg-destructive/20 data-[variant=destructive]:focus:text-destructive data-[variant=destructive]:*:[svg]:!text-destructive [&_svg:not([class*='text-'])]:text-muted-foreground relative flex  items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 data-[inset]:pl-8 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}
@@ -90,13 +90,13 @@ function DropdownMenuCheckboxItem({
     <DropdownMenuPrimitive.CheckboxItem
       data-slot="dropdown-menu-checkbox-item"
       className={cn(
-        "focus:bg-mid-blue/20 transition-all duration-200 ease-in-out bg-accent focus:text-accent-foreground aria-checked:bg-mid-blue/20 relative flex cursor-pointer items-center gap-1 rounded-sm py-1 pr-8 pl-2 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "focus:bg-mid-blue/20 transition-all duration-200 ease-in-out bg-accent focus:text-accent-foreground aria-checked:bg-mid-blue/20 relative flex items-center gap-1 rounded-sm py-1 pr-8 pl-2 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       checked={checked}
       {...props}
     >
-      <span className="pointer-events-none absolute right-2 size-4.5 rounded-full peer-data-[state=checked]:border-mid-blue border-gray-400 border-1 cursor-pointer aspect-square flex justify-center items-center">
+      <span className="pointer-events-none absolute right-2 size-4.5 rounded-full peer-data-[state=checked]:border-mid-blue border-gray-400 border-1  aspect-square flex justify-center items-center">
         <DropdownMenuPrimitive.ItemIndicator>
           <CheckIcon className="size-3 text-gray-400" />
         </DropdownMenuPrimitive.ItemIndicator>
@@ -126,12 +126,12 @@ function DropdownMenuRadioItem({
     <DropdownMenuPrimitive.RadioItem
       data-slot="dropdown-menu-radio-item"
       className={cn(
-        "focus:bg-mid-blue/20 data-[state=checked]:bg-mid-blue/20 transition-all duration-200 ease-in-out bg-accent focus:text-accent-foreground aria-checked:bg-accent relative flex cursor-pointer items-center gap-1 rounded-sm py-1 pr-8 pl-2 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "focus:bg-mid-blue/20 data-[state=checked]:bg-mid-blue/20 transition-all duration-200 ease-in-out bg-accent focus:text-accent-foreground aria-checked:bg-accent relative flex  items-center gap-1 rounded-sm py-1 pr-8 pl-2 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}
     >
-      <span className="pointer-events-none absolute right-2 flex size-4.5 rounded-full items-center justify-center  border-1 border-gray-400  cursor-pointer ">
+      <span className="pointer-events-none absolute right-2 aspect-square flex size-4.5 rounded-full items-center justify-center  border-1 border-gray-400   ">
         <DropdownMenuPrimitive.ItemIndicator>
           <CircleIcon className="size-2.5 text-gray-400 fill-gray-400" />
         </DropdownMenuPrimitive.ItemIndicator>
@@ -209,7 +209,7 @@ function DropdownMenuSubTrigger({
       data-slot="dropdown-menu-sub-trigger"
       data-inset={inset}
       className={cn(
-        "focus:bg-accent focus:text-accent-foreground data-[state=open]:bg-accent data-[state=open]:text-accent-foreground flex cursor-default items-center rounded-sm px-2 py-1.5 text-sm outline-hidden select-none data-[inset]:pl-8",
+        "focus:bg-accent focus:text-accent-foreground data-[state=open]:bg-accent data-[state=open]:text-accent-foreground flex  items-center rounded-sm px-2 py-1.5 text-sm outline-hidden select-none data-[inset]:pl-8",
         className
       )}
       {...props}

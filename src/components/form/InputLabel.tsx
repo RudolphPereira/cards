@@ -5,7 +5,7 @@ type Props = {
 
 export const InputLabel = ({ title, htmlFor }: Props) => {
   return (
-    <label className="text-xl font-medium" htmlFor={htmlFor}>
+    <label className="text-xl font-medium w-fit" htmlFor={htmlFor}>
       {title}
     </label>
   );

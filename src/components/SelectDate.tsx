@@ -22,14 +22,14 @@ export function SelectDate({ date, setDate, id }: Props) {
         <Button
           id={id}
           className={cn(
-            " flex-1 justify-between text-left font-normal text-sm bg-white border  border-gray-300 text-dark-blue rounded-full cursor-pointer py-3 shadow-none hover:bg-white pl-6  h-[50px]",
+            "date-btn flex-1 justify-between text-left font-normal text-sm bg-white border  border-gray-300 text-dark-blue rounded-full cursor-pointer py-3 shadow-none hover:bg-white  h-[50px]",
             !date && "text-muted-foreground"
           )}
         >
           {date ? (
             format(date, "PPP")
           ) : (
-            <span className="pl-[.3rem] text-dark-blue/60 text-base  flex-2">
+            <span className="pl-0 text-dark-blue/60 text-base flex-2">
               Select Date
             </span>
           )}

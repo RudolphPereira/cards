@@ -19,19 +19,20 @@ function TaskDetail({}: Props) {
     handleRepeatSubTask,
     handleDeleteSavedSubTask,
   }: any = useTodo();
+
   const { id } = useParams();
 
   const todo = getTodo(id);
 
   return (
-    <div className="taskDetail flex flex-col gap-8 px-4 py-4.5 ">
+    <div className="taskDetail flex flex-col gap-8 px-4 py-4.5">
       <FadeIn delayNum={0}>
-        <PageTitleBox title="Card Details" rightBtn={true} />
+        <PageTitleBox title="Card Details" rightBtn={true} todoId={todo.id} />
       </FadeIn>
 
       <div className="formBox flex flex-col gap-6">
         <FadeIn delayNum={0.2}>
-          <div className="cardBox flex flex-col gap-3 w-full">
+          <div className="cardBox flex flex-col gap-3 w-full items-center">
             <TaskCard ProgressBar={ProgressBar} todo={todo} />
           </div>
         </FadeIn>

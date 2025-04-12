@@ -1,3 +1,33 @@
 * {
   box-sizing: border-box;
 }
+
+a {
+  display: inline-block;
+}
+
+.list {
+  user-select: none;
+}
+
+.searchBox {
+  &::after {
+    content: "";
+    position: absolute;
+    top: -40%;
+    right: -10%;
+    height: 9.5rem;
+    width: 120%;
+    background-color: whitesmoke;
+    z-index: -1;
+    /* padding-top: 2rem; */
+    padding: 2rem 2rem 0rem 2rem;
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+  }
+}
+
+.date-btn {
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
+}

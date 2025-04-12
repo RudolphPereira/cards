@@ -18,6 +18,7 @@ import { Button } from "@/components/ui/button";
 import { useTodo } from "@/context/TodoContext";
 import AnimatedNumber from "@/components/animations/AnimateNumber";
 import { ToolTip } from "./ToolTips/ToolTip";
+import { formatTime } from "@/lib/utils";
 import { useEffect } from "react";
 
 type Props = {
@@ -105,7 +106,7 @@ export function TaskCard({
   return (
     <Card
       key={todo.id}
-      className={`w-[100%]  ${
+      className={`max-w-470px sm:min-w-[100%] ${
         todo.completed ? `bg-emerald-600/20` : setCardBgColor
       } border-0 p-4 flex flex-col gap-3 relative overflow-hidden transition-all duration-200 ease-in-out`}
     >
@@ -113,7 +114,7 @@ export function TaskCard({
         <CardTitle className="flex gap-2 justify-between flex-wrap p-0 items-center">
           <div className="leftActionBox flex gap-y-3 gap-x-1 items-center max-w-[250px]">
             <div
-              className={` ${
+              className={`${
                 todo.completed ? "border-emerald-600" : setCardDotColor
               } border cardDot aspect-square rounded-full w-5 h-5 bg-whitesmoke transition-all duration-200 ease-in-out`}
             ></div>
@@ -122,7 +123,7 @@ export function TaskCard({
                 <ToolTip
                   content={
                     <span
-                      className={` ${
+                      className={`${
                         todo.completed ? `line-through` : `no-underline`
                       } text-lg line-clamp-1 truncate  block hover:text-dark-red hover:underline transition-all duration-200 ease-in-out max-w-[270px] `}
                     >
@@ -133,7 +134,7 @@ export function TaskCard({
                 />
               </Link>
             ) : (
-              <span className="text-lg line-clamp-1 truncate  block">
+              <span className="text-lg line-clamp-1 truncate block">
                 {todo.title}
               </span>
             )}
@@ -153,7 +154,7 @@ export function TaskCard({
                 toolTipText="Delete Card"
               />
 
-              <Link to={"./EditTask"}>
+              <Link to={`/EditTask/${todo.id}`}>
                 <ToolTip
                   content={
                     <Button className="w-[40px] h-[40px] group bg-whitesmoke text-dark-blue cursor-pointer rounded-full aspect-square transition-all duration-500 ease-in-out hover:bg-mid-blue hover:shadow-lg active:scale-95">
@@ -216,7 +217,7 @@ export function TaskCard({
                  ${
                    todo.completed ? `text-emerald-600` : setDateTimeTextColor
                  } bg-whitesmoke px-2 rounded shadow-xs transition-all duration-200 ease-in-out`}
-              >{`${todo.timeSelected}`}</span>
+              >{`${formatTime(todo.timeSelected)}`}</span>
             </div>
           </div>
           <div className="priorityBox flex gap-1.5 items-center">
@@ -228,7 +229,7 @@ export function TaskCard({
               />
             </div>
             <div className="textBox flex gap-1 items-center flex-wrap">
-              <p className="opacity-60">Priority: </p>
+              <p className="opacity-60">Priority:</p>
               <span>{setIntensity(todo.priority)}</span>
               <span>{`(${todo.priority}/10)`}</span>
             </div>
@@ -299,11 +300,8 @@ export function TaskCard({
             <div className="barBox shadow-xs rounded-full">
               <ProgressBar
                 value={todo.completed ? 100 : progressValue}
-                additionalClass={` ${
-                  todo.completed
-                    ? "[&>div]:bg-emerald-600"
-                    : `[&>div]:${cardColor}`
-                }`}
+                todo={todo}
+                progressColor={cardColor}
               />
             </div>
           </div>

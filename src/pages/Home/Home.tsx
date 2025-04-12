@@ -8,14 +8,28 @@ import InputPill from "@/components/form/InputPill";
 import { FadeIn } from "@/components/animations/FadeIn";
 import { CircleProgress } from "@/components/progressBars/CircleProgress";
 import { useTodo } from "@/context/TodoContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import SortableList, { SortableItem, SortableKnob } from "react-easy-sort";
+import arrayMove from "array-move";
+import AlertInfo from "@/components/alert/Alert";
+import NoData from "@/components/alert/NoData";
 
 type Props = {};
 
 function Home({}: Props) {
-  const { todos, sortedTodos, sortValue }: any = useTodo();
+  const {
+    todos,
+    sortedTodos,
+    sortValue,
+    selectedTags,
+    powerMode,
+    setPowerMode,
+    searchText,
+    searchValue,
+  }: any = useTodo();
 
-  const [powerMode, setPowerMode] = useState<boolean>(false);
+  const [dragTodos, setDragTodos] = useState<any>(sortedTodos);
+  const [noData, setNoData] = useState<boolean>(true);
 
   if (sortValue === "Ascending Priority") {
     sortedTodos.sort((a: any, b: any) => a.priority - b.priority);
@@ -26,17 +40,106 @@ function Home({}: Props) {
   } else if (sortValue === "Descending Complexity") {
     sortedTodos.sort((a: any, b: any) => b.complexity - a.complexity);
   } else if (sortValue === "Ascending Date") {
-    sortedTodos.sort((a: any, b: any) => a.dateSelected - b.dateSelected);
+    sortedTodos.sort(
+      (a: any, b: any) => +new Date(a.dateSelected) - +new Date(b.dateSelected)
+    );
   } else if (sortValue === "Descending Date") {
-    sortedTodos.sort((a: any, b: any) => b.dateSelected - a.dateSelected);
+    sortedTodos.sort(
+      (a: any, b: any) => +new Date(b.dateSelected) - +new Date(a.dateSelected)
+    );
   }
 
   sortedTodos.reverse();
+
+  useEffect(() => {
+    setDragTodos(sortedTodos);
+  }, [sortedTodos.length, selectedTags, searchValue]);
+
+  let filteredTodos = sortedTodos.filter((todo: any) => {
+    if (selectedTags.length > 0) {
+      return selectedTags.some((selectedTag: any) => {
+        return todo.tags.map((tag: any) => tag[0]).includes(selectedTag);
+      });
+    }
+  });
+
+  let filteredDragTodos = dragTodos.filter((todo: any) => {
+    if (selectedTags.length > 0) {
+      return selectedTags.some((selectedTag: any) => {
+        return todo.tags.map((tag: any) => tag[0]).includes(selectedTag);
+      });
+    }
+  });
+
+  let filterSearchTodos = sortedTodos.filter((todo: any) => {
+    if (searchValue !== "") {
+      return todo.title.toLowerCase().includes(searchValue);
+    }
+  });
+
+  let filterSearchDragTodos = dragTodos.filter((todo: any) => {
+    if (searchValue !== "") {
+      return todo.title.toLowerCase().includes(searchValue);
+    }
+  });
+
+  let todosToRender = sortedTodos;
+  let dragTodosToRender = dragTodos;
+
+  if (filteredTodos.length > 0) {
+    todosToRender = filteredTodos;
+  } else {
+    todosToRender = sortedTodos;
+  }
+
+  if (filteredDragTodos.length > 0) {
+    dragTodosToRender = filteredDragTodos;
+  }
+
+  if (filterSearchTodos.length > 0) {
+    todosToRender = filterSearchTodos;
+  } else if (searchValue !== "" && filterSearchTodos.length === 0) {
+    todosToRender = [];
+  }
+
+  if (filterSearchDragTodos.length > 0) {
+    dragTodosToRender = filterSearchDragTodos;
+  } else if (searchValue !== "" && filterSearchDragTodos.length === 0) {
+    dragTodosToRender = [];
+  }
+
+  useEffect(() => {
+    if (
+      (searchValue !== "" && filterSearchDragTodos.length === 0) ||
+      (searchValue !== "" && filterSearchTodos.length === 0)
+    ) {
+      setNoData(true);
+    } else {
+      setNoData(false);
+    }
+  }, [filterSearchTodos, filterSearchDragTodos]);
 
   // Power Mode
   const powerCard = [...sortedTodos]
     .sort((a: any, b: any) => b.power - a.power)
     .find((todo: any) => !todo.completed);
+
+  // Drag Cards
+  const onSortEnd = (oldIndex: number, newIndex: number) => {
+    setDragTodos((array: any) => arrayMove(array, oldIndex, newIndex));
+
+    if (filteredDragTodos.length > 0) {
+      setDragTodos((array: any) =>
+        arrayMove(filteredDragTodos, oldIndex, newIndex)
+      );
+    }
+
+    if (filterSearchDragTodos.length > 0) {
+      setDragTodos((array: any) =>
+        arrayMove(filterSearchDragTodos, oldIndex, newIndex)
+      );
+    }
+  };
 
   return (
     <section
@@ -46,9 +149,7 @@ function Home({}: Props) {
           : `min-h-[100%] justify-start`
       }`}
     >
-      {todos.length === 0 ? (
-        <></>
-      ) : (
+      {todos.length !== 0 && (
         <>
           <div className="searchBox sticky top-5 z-10 ">
             <FadeIn delayNum={0}>
@@ -59,8 +160,9 @@ function Home({}: Props) {
                 htmlFor="searchInput"
                 id="searchInput"
                 placeHolder={"Search your cards"}
-                additionalClassForCirBtn="group-hover/right-btn:bg-mid-blue group-focus-within/right-btn:bg-mid-blue rotate-45 group-hover/right-btn:rotate-0 group-focus-within/right-btn:rotate-0 pointer-events-none"
+                additionalClassForCirBtn={`group-hover/right-btn:bg-mid-blue group-focus-within/right-btn:bg-mid-blue rotate-45 group-hover/right-btn:rotate-0 group-focus-within/right-btn:rotate-0 pointer-events-none`}
                 rightIcon={<ArrowRight />}
+                handleGetValue={(e) => searchText(e.target.value)}
               />
             </FadeIn>
           </div>
@@ -77,9 +179,9 @@ function Home({}: Props) {
         </>
       )}
 
-      <div className="cardBoxes flex flex-col gap-4 overflow-auto pb-3 no-scrollbar">
+      <div className="cardBoxes flex flex-col gap-4 overflow-visible pb-3 no-scrollbar">
         <FadeIn delayNum={0.3}>
-          <div className="flex flex-col-reverse gap-5 max-w-[500px]">
+          <div className="flex flex-col-reverse gap-5 items-center w-[100%]">
             {powerMode && powerCard !== undefined ? (
               <TaskCard
                 key={powerCard.id}
@@ -91,23 +193,54 @@ function Home({}: Props) {
               />
             ) : (
               <>
-                {sortedTodos.map((todo: any) => (
-                  <TaskCard
-                    key={todo.id}
-                    todo={todo}
-                    CircleProgress={CircleProgress}
-                    DeleteEditComplete
-                    Tags
-                    TaskLink
-                  />
-                ))}
+                {sortValue === "Custom" ? (
+                  <SortableList
+                    onSortEnd={onSortEnd}
+                    className="list  flex flex-col-reverse gap-5 w-[100%]"
+                    draggedItemClassName="dragged rounded-xl bg-whitesmoke"
+                  >
+                    {dragTodosToRender.map((todo: any) => (
+                      <SortableItem key={todo.id}>
+                        <div className="item relative flex flex-col sm:items-center">
+                          <SortableKnob>
+                            <div className="sm:-mb-5 mb-2 w-[fit-content] px-3 py-1.5 rounded-sm bg-white border sm:border-0 sm:bg-white/80 z-20 font-medium text-mid-blue text-sm hover:shadow-sm hover:border-mid-blue transition duration-200 ease-in-out hover:bg-mid-blue hover:text-white ">
+                              Drag Me
+                            </div>
+                          </SortableKnob>
+                          <TaskCard
+                            key={todo.id}
+                            todo={todo}
+                            CircleProgress={CircleProgress}
+                            DeleteEditComplete
+                            Tags
+                            TaskLink
+                          />
+                        </div>
+                      </SortableItem>
+                    ))}
+                  </SortableList>
+                ) : (
+                  <>
+                    {todosToRender.map((todo: any) => (
+                      <TaskCard
+                        key={todo.id}
+                        todo={todo}
+                        CircleProgress={CircleProgress}
+                        DeleteEditComplete
+                        Tags
+                        TaskLink
+                      />
+                    ))}
+                  </>
+                )}
               </>
             )}
+            {noData && !powerMode && <NoData />}
           </div>
         </FadeIn>
       </div>
 
-      <div className="homePageButtons flex flex-col gap-4 ">
+      <div className="homePageButtons flex flex-col gap-4">
         <FadeIn delayNum={todos.length !== 0 ? 0.4 : 0}>
           <Link to={"/NewTask"}>
             <ActionBtn
@@ -120,11 +253,9 @@ function Home({}: Props) {
           </Link>
         </FadeIn>
 
-        {todos.length <= 1 ? (
-          <></>
-        ) : (
+        {todos.length >= 2 && (
           <>
-            {powerCard !== undefined ? (
+            {powerCard !== undefined && (
               <FadeIn delayNum={0.5}>
                 <ActionBtn
                   handleClickEvent={() => setPowerMode(!powerMode)}
@@ -137,12 +268,12 @@ function Home({}: Props) {
                   text="Power Mode"
                 />
               </FadeIn>
-            ) : (
-              <></>
             )}
           </>
         )}
       </div>
+
+      {powerMode && <AlertInfo />}
     </section>
   );
 }

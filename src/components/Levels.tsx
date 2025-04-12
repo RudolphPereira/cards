@@ -8,8 +8,23 @@ type Props = {
   id: string;
 };
 
+interface LevelOptions {
+  value: string;
+}
+
 export function Levels({ handleGetValue, checkedNum, id }: Props) {
-  const { optionsLevel }: any = useTodo();
+  const optionsLevel: LevelOptions[] = [
+    { value: "1" },
+    { value: "2" },
+    { value: "3" },
+    { value: "4" },
+    { value: "5" },
+    { value: "6" },
+    { value: "7" },
+    { value: "8" },
+    { value: "9" },
+    { value: "10" },
+  ];
 
   return (
     <RadioGroup

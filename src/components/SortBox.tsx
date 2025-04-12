@@ -13,6 +13,7 @@ export function SortBox() {
   const { sortValue, setSortValue }: any = useTodo();
 
   const sortArrLabels: Array<string> = [
+    "Custom",
     "Default",
     "Ascending Date",
     "Descending Date",
@@ -25,12 +26,12 @@ export function SortBox() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button className="bg-white cursor-pointer flex items-center justify-between rounded-full shadow-none w-full p-5 text-[0.9rem] text-dark-blue hover:bg-white border border-gray-300">
+        <Button className="bg-white flex items-center justify-between rounded-full shadow-none w-full p-5 text-[0.9rem] text-dark-blue hover:bg-white border border-gray-300">
           Sort
           <ChevronDown />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="bg-white border-0 rounded-2xl p-3  min-w-[13rem]">
+      <DropdownMenuContent className="bg-white border-0 rounded-2xl p-3 min-w-[13rem]">
         <DropdownMenuRadioGroup
           defaultValue={"Default"}
           value={sortValue}

@@ -6,9 +6,10 @@ import { useTodo } from "@/context/TodoContext";
 type Props = {
   title: string;
   rightBtn?: boolean;
+  todoId?: string;
 };
 
-function PageTitleBox({ title, rightBtn }: Props) {
+function PageTitleBox({ title, rightBtn, todoId }: Props) {
   const { handleBack }: any = useTodo();
   return (
     <div className="titleBox flex items-center justify-center  w-full sticky top-0">
@@ -22,8 +23,8 @@ function PageTitleBox({ title, rightBtn }: Props) {
       <h1 className="text-3xl w-[100%] text-center font-medium">{title}</h1>
 
       {rightBtn && (
-        <div className="editBtnBox absolute right-0">
-          <Link to={"/EditTask"}>
+        <div className="editBtnBox absolute right-0 -mr-1.5">
+          <Link to={`/EditTask/${todoId}`}>
             <CircleBtn
               icon={<Pencil />}
               additionalClassForCirBtn="hover:bg-mid-blue"
