@@ -10,7 +10,7 @@ import { useTodo } from "@/context/TodoContext";
 import { ChevronDown } from "lucide-react";
 
 export function SortBox() {
-  const { sortValue, setSortValue }: any = useTodo();
+  const { sortValue, setSortValue, sortedTodos }: any = useTodo();
 
   const sortArrLabels: Array<string> = [
     "Custom",
@@ -22,6 +22,26 @@ export function SortBox() {
     "Ascending Priority",
     "Descending Priority",
   ];
+
+  if (sortValue === "Ascending Priority") {
+    sortedTodos.sort((a: any, b: any) => a.priority - b.priority);
+  } else if (sortValue === "Descending Priority") {
+    sortedTodos.sort((a: any, b: any) => b.priority - a.priority);
+  } else if (sortValue === "Ascending Complexity") {
+    sortedTodos.sort((a: any, b: any) => a.complexity - b.complexity);
+  } else if (sortValue === "Descending Complexity") {
+    sortedTodos.sort((a: any, b: any) => b.complexity - a.complexity);
+  } else if (sortValue === "Ascending Date") {
+    sortedTodos.sort(
+      (a: any, b: any) => +new Date(a.dateSelected) - +new Date(b.dateSelected)
+    );
+  } else if (sortValue === "Descending Date") {
+    sortedTodos.sort(
+      (a: any, b: any) => +new Date(b.dateSelected) - +new Date(a.dateSelected)
+    );
+  }
+
+  sortedTodos.reverse();
 
   return (
     <DropdownMenu>
