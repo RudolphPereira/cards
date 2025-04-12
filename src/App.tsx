@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router";
+import { HashRouter, Routes, Route } from "react-router";
 import Home from "./pages/Home/Home";
 import NewTask from "./pages/NewTask/NewTask";
 import EditTask from "./pages/EditTask/EditTask";
@@ -52,7 +52,7 @@ function App() {
               "button",
             ]}
           />
-          <BrowserRouter>
+          <HashRouter>
             <TodoProvider>
               <Routes>
                 <Route path="/" element={<Home />} />
@@ -61,7 +61,7 @@ function App() {
                 <Route path="/editTask/:id" element={<EditTask />} />
               </Routes>
             </TodoProvider>
-          </BrowserRouter>
+          </HashRouter>
         </div>
       ) : (
         <PageLoader isloaded={isloaded} />
