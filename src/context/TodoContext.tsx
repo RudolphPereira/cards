@@ -40,7 +40,6 @@ export function TodoProvider({ children }: Props) {
   const [todos, setTodos] = useState<Card[]>(storedTodos);
   const [sortValue, setSortValue] = useState<string>("Default");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const [powerMode, setPowerMode] = useState<boolean>(false);
   const [searchValue, setSearchValue] = useState<string>("");
   const sortedTodos = [...todos];
 
@@ -67,7 +66,8 @@ export function TodoProvider({ children }: Props) {
       title: title,
       priority: priority,
       complexity: complexity,
-      dateSelected: dateSelected.toDateString(),
+      dateSelected:
+        dateSelected !== undefined ? dateSelected.toDateString() : dateSelected,
       timeSelected: timeSelected,
       subTasks: subTasks,
       tags: tags,
@@ -288,8 +288,6 @@ export function TodoProvider({ children }: Props) {
         sortedTodos,
         selectedTags,
         setSelectedTags,
-        powerMode,
-        setPowerMode,
         searchValue,
         setSearchValue,
         handleBack,

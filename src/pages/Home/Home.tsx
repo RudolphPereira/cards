@@ -22,18 +22,13 @@ function Home({}: Props) {
     sortedTodos,
     sortValue,
     selectedTags,
-    powerMode,
-    setPowerMode,
     searchText,
     searchValue,
   }: any = useTodo();
 
   const [dragTodos, setDragTodos] = useState<any>(sortedTodos);
   const [noData, setNoData] = useState<boolean>(true);
-
-  useEffect(() => {
-    setDragTodos(sortedTodos);
-  }, [sortedTodos.length, selectedTags, searchValue]);
+  const [powerMode, setPowerMode] = useState<boolean>(false);
 
   if (sortValue === "Ascending Priority") {
     sortedTodos.sort((a: any, b: any) => a.priority - b.priority);
@@ -125,6 +120,10 @@ function Home({}: Props) {
     .find((todo: any) => !todo.completed);
 
   // Drag Cards
+  useEffect(() => {
+    setDragTodos(sortedTodos);
+  }, [sortedTodos.length, selectedTags, searchValue]);
+
   const onSortEnd = (oldIndex: number, newIndex: number) => {
     setDragTodos((array: any) => arrayMove(array, oldIndex, newIndex));
 

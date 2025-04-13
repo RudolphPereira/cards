@@ -26,7 +26,7 @@ interface Tags {}
 
 function Form({ todo }: Props) {
   // Context
-  const { setSearchValue, addTodo, editTodo }: any = useTodo();
+  const { setSearchValue, addTodo, editTodo, todos }: any = useTodo();
 
   // States
   const [newTodo, setNewTodo] = useState<string>(todo ? todo.title : "");
@@ -89,6 +89,30 @@ function Form({ todo }: Props) {
   const handleDeleteSubTask = (id: string) => {
     const updatedSubTasks = subTasks.filter((subTask) => subTask.id !== id);
     setSubTasks(updatedSubTasks);
+  };
+
+  const deleteTodo = (id: string) => {
+    const updatedTodos = todos.filter((todo) => todo.id !== id);
+    setTodos(updatedTodos);
+  };
+
+  const completeTodo = (id: string) => {
+    const updatedTodos = todos.map((todo) => {
+      if (todo.id === id) {
+        todo.completed = !todo.completed;
+        if (todo.completed) {
+          todo.subTasks.map((subTask) => {
+            subTask.completed = true;
+          });
+        } else {
+          todo.subTasks.map((subTask) => {
+            subTask.completed = false;
+          });
+        }
+      }
+      return todo;
+    });
+    setTodos(updatedTodos);
   };
 
   const handleOnSubmit = (e: FormEvent<HTMLFormElement>) => {
