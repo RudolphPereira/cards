@@ -88,8 +88,6 @@ function Home({}: Props) {
 
   if (filteredTodos.length > 0) {
     todosToRender = filteredTodos;
-  } else {
-    todosToRender = sortedTodos;
   }
 
   if (filteredDragTodos.length > 0) {
