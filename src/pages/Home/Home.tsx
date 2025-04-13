@@ -198,7 +198,7 @@ function Home({}: Props) {
                       <SortableItem key={todo.id}>
                         <div className="item relative flex flex-col sm:items-center">
                           <SortableKnob>
-                            <div className="sm:-mb-5 mb-2 w-[fit-content] px-3 py-1.5 rounded-sm bg-white border sm:border-0 sm:bg-white/80 z-20 font-medium text-mid-blue text-sm hover:shadow-sm hover:border-mid-blue transition duration-200 ease-in-out hover:bg-mid-blue hover:text-white ">
+                            <div className="cursor-grab sm:-mb-5 mb-2 w-[fit-content] px-3 py-1.5 rounded-sm bg-white border sm:border-0 sm:bg-white/80 z-20 font-medium text-mid-blue text-sm hover:shadow-sm hover:border-mid-blue transition duration-200 ease-in-out hover:bg-mid-blue hover:text-white ">
                               Drag Me
                             </div>
                           </SortableKnob>
