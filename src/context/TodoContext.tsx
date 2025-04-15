@@ -37,7 +37,7 @@ interface Tags {}
 
 export function TodoProvider({ children }: Props) {
   const storedTodos = JSON.parse(localStorage.getItem("todos") ?? "[]");
-  const [todos, setTodos] = useState<Card[]>(storedTodos.reverse());
+  const [todos, setTodos] = useState<Card[]>(storedTodos);
   const [sortValue, setSortValue] = useState<string>("Default");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [searchValue, setSearchValue] = useState<string>("");
