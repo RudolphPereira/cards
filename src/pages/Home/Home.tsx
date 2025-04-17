@@ -230,7 +230,12 @@ function Home({}: Props) {
                 )}
               </>
             )}
-            {noData && !powerMode && <NoData />}
+            {noData && !powerMode && (
+              <NoData
+                title="Card Unavailable"
+                desc="We do not have any data for the current search term."
+              />
+            )}
           </div>
         </FadeIn>
       </div>

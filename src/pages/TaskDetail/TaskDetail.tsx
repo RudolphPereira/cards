@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import CircleBtn from "../../components/buttons/CircleBtn";
 import { useTodo } from "@/context/TodoContext";
 import { useParams } from "react-router";
+import NoData from "@/components/alert/NoData";
 
 type Props = {};
 
@@ -42,7 +43,7 @@ function TaskDetail({}: Props) {
             {todo.subTasks.length !== 0 ? (
               <InputLabel title="Tasks In Your Card" />
             ) : (
-              <InputLabel title="No Tasks In Your Card" />
+              <NoData title="No Action Pending" desc="No Tasks In Your Card" />
             )}
 
             {todo.subTasks.map((subTask: any) => (
