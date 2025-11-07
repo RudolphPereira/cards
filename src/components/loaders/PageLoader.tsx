@@ -5,6 +5,8 @@ type Props = {
   isloaded: boolean;
 };
 
+// test
+
 function HomePageLoader({ isloaded }: Props) {
   return (
     <>
