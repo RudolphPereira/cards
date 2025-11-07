@@ -199,7 +199,7 @@ function Form({ todo }: Props) {
         </div>
       </FadeIn>
 
-      <div className="dateTimeBox flex gap-3">
+      <div className="dateTimeBox flex flex-col sm:flex-row gap-3">
         <FadeIn delayNum={0.4}>
           <div className="dateBox flex-1 flex flex-col gap-3 w-full">
             <InputLabel title="Select Due Date" htmlFor="date" />

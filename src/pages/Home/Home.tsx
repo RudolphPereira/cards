@@ -138,7 +138,7 @@ function Home({}: Props) {
 
   return (
     <section
-      className={`home flex flex-col gap-5 relative px-4 py-4.5 ${
+      className={`home flex flex-col gap-5 relative px-4 py-4.5 min-h-dvh ${
         todos.length === 0
           ? `min-h-[90vh] justify-center`
           : `min-h-[100%] justify-start`
@@ -238,6 +238,17 @@ function Home({}: Props) {
             )}
           </div>
         </FadeIn>
+
+        {todos.length === 1 && (
+          <div className="guideBox overflow-hidden">
+            <FadeIn delayNum={0.4}>
+              <NoData
+                title="Application Navigation Guide"
+                desc="Click on the card title to view more details about your cards"
+              />
+            </FadeIn>
+          </div>
+        )}
       </div>
 
       <div className="homePageButtons flex flex-col gap-4">
