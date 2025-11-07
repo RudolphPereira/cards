@@ -239,7 +239,7 @@ function Home({}: Props) {
           </div>
         </FadeIn>
 
-        {todos.length === 1 && (
+        {!noData && todos.length === 1 && (
           <div className="guideBox overflow-hidden">
             <FadeIn delayNum={0.4}>
               <NoData
