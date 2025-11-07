@@ -138,7 +138,7 @@ function Home({}: Props) {
 
   return (
     <section
-      className={`home flex flex-col gap-5 relative px-4 py-4.5 min-h-dvh ${
+      className={`home flex flex-col gap-5 relative px-4 py-4.5  ${
         todos.length === 0
           ? `min-h-[90vh] justify-center`
           : `min-h-[100%] justify-start`
